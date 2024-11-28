@@ -52,6 +52,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 }
 
+
 apollo {
     service("bank") {
         packageName.set("ma.ensa.tpgraphql")

@@ -14,6 +14,8 @@ type Query {
     allComptes: [Compte]
     compteById(id: ID!): Compte
     totalSolde: TotalSoldeResponse
+    findByType(type: TypeCompte!): [Compte]
+
 }
 
 type TotalSoldeResponse {
@@ -24,6 +26,8 @@ type TotalSoldeResponse {
 
 type Mutation {
     saveCompte(compte: CompteInput): Compte
+    deleteCompte(id: ID!): String
+
 }
 
 input CompteInput {

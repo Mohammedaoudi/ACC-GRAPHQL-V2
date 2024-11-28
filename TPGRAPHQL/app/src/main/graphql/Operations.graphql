@@ -24,3 +24,16 @@ mutation SaveCompte($compte: CompteInput!) {
         type
     }
 }
+
+query FindByType($type: TypeCompte!) {
+    findByType(type: $type) {
+        id
+        solde
+        dateCreation
+        type
+    }
+}
+
+mutation DeleteCompte($id: ID!) {
+    deleteCompte(id: $id)
+}

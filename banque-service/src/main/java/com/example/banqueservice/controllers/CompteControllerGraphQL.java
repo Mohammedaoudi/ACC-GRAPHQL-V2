@@ -2,6 +2,7 @@ package com.example.banqueservice.controllers;
 
 
 import com.example.banqueservice.entities.Compte;
+import com.example.banqueservice.entities.TypeCompte;
 import com.example.banqueservice.repositories.CompteRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -46,4 +47,23 @@ public class CompteControllerGraphQL {
                 "average", average
         );
     }
+
+
+    @QueryMapping
+    public List<Compte> findByType(@Argument TypeCompte type) {
+        return compteRepository.findByType(type);
+    }
+
+    // Delete compte by ID
+    @MutationMapping
+    public String deleteCompte(@Argument Long id) {
+        if (compteRepository.existsById(id)) {
+            compteRepository.deleteById(id);
+            return "success";
+        } else {
+            throw new RuntimeException("Compte not found");
+        }
+    }
+
+
 }

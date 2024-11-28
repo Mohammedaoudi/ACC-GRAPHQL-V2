@@ -3,12 +3,15 @@ package ma.ensa.tpgraphql.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ma.ensa.tpgraphql.R
 import ma.ensa.tpgraphql.GetAllComptesQuery
 
-class CompteAdapter : RecyclerView.Adapter<CompteAdapter.CompteViewHolder>() {
+class CompteAdapter(
+    private val onDeleteClick: (String) -> Unit
+) : RecyclerView.Adapter<CompteAdapter.CompteViewHolder>() {
     private var comptes = mutableListOf<GetAllComptesQuery.AllCompte>()
 
     inner class CompteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -16,6 +19,7 @@ class CompteAdapter : RecyclerView.Adapter<CompteAdapter.CompteViewHolder>() {
         val soldeTextView: TextView = itemView.findViewById(R.id.soldeTextView)
         val typeTextView: TextView = itemView.findViewById(R.id.typeTextView)
         val dateTextView: TextView = itemView.findViewById(R.id.dateTextView)
+        val deleteButton: ImageButton = itemView.findViewById(R.id.deleteButton)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CompteViewHolder {
@@ -27,10 +31,13 @@ class CompteAdapter : RecyclerView.Adapter<CompteAdapter.CompteViewHolder>() {
     override fun onBindViewHolder(holder: CompteViewHolder, position: Int) {
         val compte = comptes[position]
         holder.apply {
-            idTextView.text = "id: ${compte.id}"
+            idTextView.text = "ACCOUNT ID: ${compte.id}"
             soldeTextView.text = "Solde: ${compte.solde} DH"
             typeTextView.text = "Type: ${compte.type}"
             dateTextView.text = "Date: ${compte.dateCreation ?: "N/A"}"
+            deleteButton.setOnClickListener {
+                onDeleteClick(compte.id)
+            }
         }
     }
 
